@@ -4,8 +4,9 @@ L'esercizio di oggi è quello di creare, come fatto in aula, una todo list sulla
 */
 
 $(document).ready(function	() {
-	createTodoList()
+	createTodoList();
 	readTodoList();
+	updateTodoList();
 	deleteTodoList();
 });
 
@@ -38,8 +39,28 @@ function readTodoList () {
 		}
 	})
 }
+function updateTodoList	()	{
+	$('.list').on('click', '.update', function () {
+		var elm = $(this).parent();
+		var id = elm.attr('id');
+		var item = elm.children('input').val()
+		$.ajax({
+			url: 'http://157.230.17.132:3011/todos/' + id,
+			type: 'PUT',
+			data: {
+				text: item
+			},
+			success: function (data) {
+				var elmCreated = [];
+				elmCreated.push(data);
+				render(data);
+			}
+		})
+	});
+}
 function deleteTodoList ()	{
 	$('.list').on('click', '.delete', function () {
+		console.log('ok')
 		var elm = $(this).parent();
 		var id = elm.attr('id');
 		$.ajax({

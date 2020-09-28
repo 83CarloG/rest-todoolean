@@ -1,8 +1,11 @@
-.delete {
+.delete, .update {
 	background-color: inherit;
 	color: red;
 	margin-right: 10px;
 	cursor: pointer;
+}
+.update {
+	color: blue;
 }
 .btn-add {
 	margin-top: 10px;
