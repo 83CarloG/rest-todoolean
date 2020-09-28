@@ -4,19 +4,54 @@ L'esercizio di oggi è quello di creare, come fatto in aula, una todo list sulla
 */
 
 $(document).ready(function	() {
-	readTodoList()
+	createTodoList()
+	readTodoList();
+	deleteTodoList();
 });
+
+function createTodoList() {
+	$('.btn-add').on('click', function	() {
+		var val = $('#add-item').val()
+		if (val !== '') {
+			$.ajax({
+				url: 'http://157.230.17.132:3011/todos/',
+				type: 'POST',
+				data: {
+					'text': val
+				},
+				success: function (data) {
+					var elmCreated = [];
+					elmCreated.push(data)
+					render(elmCreated);
+				}
+			})
+		}
+	});
+}
 
 function readTodoList () {
 	$.ajax({
 		url: 'http://157.230.17.132:3011/todos',
 		type: 'GET',
 		success: function (data) {
-			console.log(data.id)
 			render(data);
 		}
 	})
 }
+function deleteTodoList ()	{
+	$('.list').on('click', '.delete', function () {
+		var elm = $(this).parent();
+		var id = elm.attr('id');
+		$.ajax({
+			url: 'http://157.230.17.132:3011/todos/' + id,
+			type: 'DELETE',
+			success: function (data) {
+				elm.remove();
+			}
+		})
+	});
+}
+
 function render (data) {
 	var source = $('#rest-template').html();
 	var template = Handlebars.compile(source);
@@ -27,5 +62,6 @@ function render (data) {
 		}
 		var html = template(context);
 		$('.list').append(html);
+		$('#add-item').val('');
 	};
 }

@@ -1,0 +1,13 @@
+.delete {
+	background-color: inherit;
+	color: red;
+	margin-right: 10px;
+	cursor: pointer;
+}
+.btn-add {
+	margin-top: 10px;
+	width: 75px;
+	text-align: center;
+	border: 1px solid #000;
+	cursor: pointer;
+}
